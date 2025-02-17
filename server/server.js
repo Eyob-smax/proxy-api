@@ -17,6 +17,12 @@ const app = express();
 app.use(cors());
 app.use(express.json());
 
+app.get("/", async (req, res) => {
+  res.sendFile(
+    path.join(path.dirname(fileURLToPath(import.meta.url)), "index.html")
+  );
+});
+
 app.get("/:basketName", async (req, res) => {
   const { basketName } = req.params;
   try {

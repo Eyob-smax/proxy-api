@@ -10,21 +10,13 @@ const PORT = process.env.PORT || 5000;
 const PANTRY_API = process.env.PANTRY_API;
 
 const PANTRY_BASE_URL = `https://getpantry.cloud/apiv1/pantry/${PANTRY_API}/basket/`;
-const TRIVIA_BASE_URL =
-  "https://opentdb.com/api.php?amount=10&category=18&difficulty=medium";
 
 const app = express();
 app.use(cors());
 app.use(express.json());
 
-app.get("/", async (req, res) => {
-  res.sendFile(
-    path.join(path.dirname(fileURLToPath(import.meta.url)), "index.html")
-  );
-});
-
 app.get("/:basketName", async (req, res) => {
-  const { basketName } = req.params;
+  const basketName = req.params;
   try {
     const response = await axios.get(`${PANTRY_BASE_URL}/${basketName}`);
     res.status(200).json(response.data);
@@ -34,8 +26,8 @@ app.get("/:basketName", async (req, res) => {
 });
 
 app.post("/:basketName", async (req, res) => {
-  const { basketName } = req.params;
-  const { data } = req.body;
+  const basketName = req.params;
+  const data = req.body;
   try {
     const response = await axios.post(`${PANTRY_BASE_URL}/${basketName}`, data);
     res.status(200).json(response.data);
@@ -45,8 +37,8 @@ app.post("/:basketName", async (req, res) => {
 });
 
 app.put("/:basketName", async (req, res) => {
-  const { basketName } = req.params;
-  const { data } = req.body;
+  const basketName = req.params;
+  const data = req.body;
   try {
     const response = await axios.put(`${PANTRY_BASE_URL}/${basketName}`, data);
     res.status(200).json(response.data);
@@ -56,7 +48,7 @@ app.put("/:basketName", async (req, res) => {
 });
 
 app.delete("/:basketName", async (req, res) => {
-  const { basketName } = req.params;
+  const basketName = req.params;
   try {
     await axios.delete(`${PANTRY_BASE_URL}/${basketName}`);
     res.status(200).json({ message: "Basket deleted" });
